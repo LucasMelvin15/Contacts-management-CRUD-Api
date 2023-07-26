@@ -25,17 +25,14 @@ const postContact = asyncHandler(async (req, res) => {
 // update any contact by id
 //@route PUT/api/contacts/:id
 const updateContact = asyncHandler(async (req, res) => {
-  const contact = await Contact.findById(req.params.id);
+  const contact = await Contact.findByIdAndUpdate(req.params.id, req.body, {
+    new: true,
+  });
   if (!contact) {
     res.status(404);
     throw new Error("Contact not found");
   }
-  const updatedContact = await Contact.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
-  res.status(200).json(updateContact);
+  res.status(200).json(contact);
 });
 //delete any contact by id
 //@route DELETE/api/contacts/:id
